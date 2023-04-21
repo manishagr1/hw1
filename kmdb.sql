@@ -105,13 +105,79 @@
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
+DROP TABLE IF EXISTS Movie;
+DROP TABLE IF EXISTS Actor;
+DROP TABLE if EXISTS Persona;
+DROP TABLE IF EXISTS Studio;
 
 -- Create new tables, according to your domain model
 -- TODO!
 
+CREATE TABLE Movie (
+    id_movie INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    year_release INTEGER,
+    rating TEXT,
+    studio TEXT
+);
+
+CREATE TABLE Actor (
+    id_actor INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_actor TEXT
+);
+
+CREATE TABLE Persona (
+    id_persona INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    id_actor INTEGER,
+    id_movie INTEGER
+);
+
+CREATE TABLE Studio (
+    id_studio INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_studio TEXT
+);
+
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+
+-- TODO!
+
+Insert INTO Movie VALUES (NULL,'Batman Begins',2005,"PG-13","Warner Bros");
+Insert INTO Movie VALUES (NULL,"The Dark Knight",2008,"PG-13","Warner Bros");
+Insert INTO Movie VALUES (NULL,"The Dark Knight Rises",2012,"PG-13","Warner Bros");
+
+Insert INTO Studio VALUES (NULL,"Warner Bros");
+
+Insert INTO Actor VALUES (NULL,"Christian Bale");
+Insert INTO Actor VALUES (NULL,"Michael Caine");
+Insert INTO Actor VALUES (NULL,"Laim Neeson");
+Insert INTO Actor VALUES (NULL,"Katie Holmes");
+Insert INTO Actor VALUES (NULL,"Gary Oldman");
+Insert INTO Actor VALUES (NULL,"Heath Ledger");
+Insert INTO Actor VALUES (NULL,"Aaron Eckhardt");
+Insert INTO Actor VALUES (NULL,"Maggie Gyllenhal");
+Insert INTO Actor VALUES (NULL,"Tom Hardy");
+Insert INTO Actor VALUES (NULL,"Joseph Gordon Levitt");
+Insert INTO Actor VALUES (NULL,"Anne Hathaway");
+
+Insert INTO Persona VALUES (NULL,"Bruce Wayne",1,1);
+Insert INTO Persona VALUES (NULL,"Alfred",2,1);
+Insert INTO Persona VALUES (NULL,"Ra's Al Ghul",3,1);
+Insert INTO Persona VALUES (NULL,"Commissioner Gordon",4,1);
+Insert INTO Persona VALUES (NULL,"Bruce Wayne",1,2);
+Insert INTO Persona VALUES (NULL,"Joker",6,2);
+Insert INTO Persona VALUES (NULL,"Harvey Dent",7,2);
+Insert INTO Persona VALUES (NULL,"Alfred",2,2);
+Insert INTO Persona VALUES (NULL,"Rachel Dawes",8,3);
+Insert INTO Persona VALUES (NULL,"Bruce Wayne",1,3);
+Insert INTO Persona VALUES (NULL,"Commissioner Gordon",5,3);
+Insert INTO Persona VALUES (NULL,"Bane",9,3);
+Insert INTO Persona VALUES (NULL,"John Blake",10,3);
+Insert INTO Persona VALUES (NULL,"Selina Kyle",11,3);
+
+
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -120,6 +186,9 @@
 
 -- The SQL statement for the movies output
 -- TODO!
+
+Select title, year_release, rating, studio
+FROM Movie;
 
 -- Prints a header for the cast output
 .print ""
@@ -130,3 +199,8 @@
 
 -- The SQL statement for the cast output
 -- TODO!
+
+Select movie.title, persona.name, actor.name_actor
+FROM Movie 
+INNER JOIN persona ON persona.id_movie = movie.id_movie
+INNER JOIN actor ON actor.id_actor = persona.id_actor;
